@@ -1,4 +1,5 @@
 from cleaning_time_table_system import CleaningTimeTableSystem
+from item_list_system import ItemListSyetem
 from meeting_time_table_system import MeetingTimeTableSystem
 from member import Member
 from roulette_system import RouletteSyetem
@@ -10,6 +11,7 @@ from flask import Flask, jsonify, request
 class MainSystem:
     def __init__(self):
         self.cleaning_time_table_system = CleaningTimeTableSystem()
+        self.item_list_system = ItemListSyetem()
         self.meeting_time_table_system = MeetingTimeTableSystem()
         self.roulette_system = RouletteSyetem()
         self.school_time_table_system = SchoolTimeTableSystem()
@@ -108,6 +110,35 @@ def course2():
                 request.headers["member_id"]
             )
         }
+    )
+
+
+@server.route("/item_list_add_item", methods=["POST"])
+def item1():
+    return jsonify(
+        {
+            "list": system.item_list_system.addItem(
+                request.headers["member_id"], request.values["information"]
+            )
+        }
+    )
+
+
+@server.route("/item_list_delete_item", methods=["POST"])
+def item2():
+    return jsonify(
+        {
+            "list": system.item_list_system.deleteItem(
+                request.headers["member_id"], request.values["id"]
+            )
+        }
+    )
+
+
+@server.route("/item_list_get_list", methods=["POST"])
+def item3():
+    return jsonify(
+        {"list": system.item_list_system.getItemList(request.headers["member_id"])}
     )
 
 
