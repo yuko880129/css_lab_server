@@ -142,5 +142,16 @@ def item3():
     )
 
 
+@server.route("/item_list_get_item", methods=["POST"])
+def item4():
+    return jsonify(
+        {
+            "info": system.item_list_system.getItemById(
+                request.headers["member_id"], request.values["id"]
+            )
+        }
+    )
+
+
 if __name__ == "__main__":
     server.run()

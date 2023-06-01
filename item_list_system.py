@@ -7,20 +7,25 @@ class ItemListSyetem:
         self.item_list = pd.read_csv("./item_list.csv")
         self.newest_id = self.item_list.iloc[-1]["id"] + 1
 
-    def addItem(self, token: str, information: list):
+    def addItem(self, token: str, information: str):
         # 由於還沒有實作 token 的 name，因此先以 token 代替，之後需補齊
+        print(information)
+        information = information.split(",")
+        print(type(information))
+        print(information)
+
         self.item_list = pd.concat(
             (
                 self.item_list,
                 pd.DataFrame(
                     [
                         [
-                            token,
                             information[0],
                             information[1],
-                            self.newest_id,
                             information[2],
-                            information[3],
+                            self.newest_id,
+                            int(information[3]),
+                            information[4],
                         ]
                     ],
                     columns=["name", "date", "item_name", "id", "price", "reason"],
@@ -28,15 +33,20 @@ class ItemListSyetem:
             ),
             ignore_index=True,
         )
+        print(self.item_list)
         self.newest_id += 1
         return self.getItemList("1111")
 
-    def deleteItem(self, token: str, id: int):
-        index = self.getItemIndex("1111", id)
+    def deleteItem(self, token: str, id: str):
+        index = self.getItemIndex(int(id))
         self.item_list = self.item_list.drop(index, axis=0)
         return self.getItemList("1111")
 
-    def getItemIndex(self, token: str, id: int):
+    def getItemById(self, token: str, id: str):
+        temp = self.item_list[self.item_list["id"] == int(id)].values.tolist()[0]
+        return temp[:3] + temp[4:]
+
+    def getItemIndex(self, id: int):
         return self.item_list[self.item_list["id"] == id].index[0]
 
     def getItemList(self, token: str):
@@ -44,6 +54,8 @@ class ItemListSyetem:
 
 
 # test = ItemListSyetem()
+
+# print(test.getItemById("1111", 0))
 
 # test.addItem("1111", ["Ray", "2023/05/30", "衛生紙", 600, "沒衛生紙了"])
 # print(test.getItemList("1111"))
