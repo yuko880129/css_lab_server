@@ -9,11 +9,7 @@ class ItemListSyetem:
 
     def addItem(self, token: str, information: str):
         # 由於還沒有實作 token 的 name，因此先以 token 代替，之後需補齊
-        print(information)
         information = information.split(",")
-        print(type(information))
-        print(information)
-
         self.item_list = pd.concat(
             (
                 self.item_list,
