@@ -7,6 +7,8 @@ from school_time_table_system import SchoolTimeTableSystem
 
 from flask import Flask, jsonify, request
 
+import atexit
+
 
 class MainSystem:
     def __init__(self):
@@ -20,6 +22,15 @@ class MainSystem:
 
 system = MainSystem()
 server = Flask(__name__)
+
+
+# Write back item list while shutting down server
+def exit_handler():
+    system.item_list_system.item_list.to_csv("./item_list.csv", index=False)
+    print("\nWrite back item list succeccfully.")
+
+
+atexit.register(exit_handler)
 
 
 @server.route("/add_restraunt", methods=["POST"])
