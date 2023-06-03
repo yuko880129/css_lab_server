@@ -36,6 +36,7 @@ class ItemListSyetem:
     def deleteItem(self, token: str, id: str):
         index = self.getItemIndex(int(id))
         self.item_list = self.item_list.drop(index, axis=0)
+        print(self.item_list)
         return self.getItemList("1111")
 
     def getItemById(self, token: str, id: str):
@@ -47,14 +48,3 @@ class ItemListSyetem:
 
     def getItemList(self, token: str):
         return list(self.item_list["id"])
-
-
-# test = ItemListSyetem()
-
-# print(test.getItemById("1111", 0))
-
-# test.addItem("1111", ["Ray", "2023/05/30", "衛生紙", 600, "沒衛生紙了"])
-# print(test.getItemList("1111"))
-
-# test.deleteItem("1111", 1)
-# print(test.getItemList("1111"))
