@@ -33,6 +33,11 @@ def exit_handler():
 atexit.register(exit_handler)
 
 
+@server.route("/")
+def root():
+    return ""
+
+
 @server.route("/add_restraunt", methods=["POST"])
 def roulette1():
     system.roulette_system.addToMemberRestaurantList(
