@@ -40,24 +40,27 @@ def root():
 
 @server.route("/add_restraunt", methods=["POST"])
 def roulette1():
+    print(request.headers)
     system.roulette_system.addToMemberRestaurantList(
-        request.headers["member_id"], request.values["name"]
+        request.headers["Member-Id"], request.values["name"]
     )
     return "success"
 
 
 @server.route("/clear_restraunt", methods=["POST"])
 def roulette2():
-    system.roulette_system.clearMemberRestaurantList(request.headers["member_id"])
+    print(request.headers)
+    system.roulette_system.clearMemberRestaurantList(request.headers["Member-Id"])
     return "success"
 
 
 @server.route("/get_restraunt_list", methods=["POST"])
 def roulette3():
+    print(request.headers)
     return jsonify(
         {
             "list": system.roulette_system.getMemberRestaurantList(
-                request.headers["member_id"]
+                request.headers["Member-Id"]
             )
         }
     )
@@ -65,10 +68,11 @@ def roulette3():
 
 @server.route("/cleaning_get_members", methods=["POST"])
 def cleaning1():
+    print(request.headers)
     return jsonify(
         {
             "list": system.cleaning_time_table_system.getHatarakuMembers(
-                request.headers["member_id"]
+                request.headers["Member-Id"]
             )
         }
     )
@@ -76,10 +80,11 @@ def cleaning1():
 
 @server.route("/cleaning_get_startD", methods=["POST"])
 def cleaning2():
+    print(request.headers)
     return jsonify(
         {
             "startD": system.cleaning_time_table_system.getSemesterStartD(
-                request.headers["member_id"]
+                request.headers["Member-Id"]
             )
         }
     )
@@ -87,10 +92,11 @@ def cleaning2():
 
 @server.route("/cleaning_get_endD", methods=["POST"])
 def cleaning3():
+    print(request.headers)
     return jsonify(
         {
             "endD": system.cleaning_time_table_system.getSemesterEndD(
-                request.headers["member_id"]
+                request.headers["Member-Id"]
             )
         }
     )
@@ -98,10 +104,11 @@ def cleaning3():
 
 @server.route("/meeting_get_time", methods=["POST"])
 def meeting1():
+    print(request.headers)
     return jsonify(
         {
             "time": system.meeting_time_table_system.getmeeting_time(
-                request.headers["member_id"]
+                request.headers["Member-Id"]
             )
         }
     )
@@ -109,10 +116,11 @@ def meeting1():
 
 @server.route("/course_get_time", methods=["POST"])
 def course1():
+    print(request.headers)
     return jsonify(
         {
             "time": system.school_time_table_system.getMemberClassTimeSchedual(
-                request.headers["member_id"], request.values["name"]
+                request.headers["Member-Id"], request.values["name"]
             )
         }
     )
@@ -120,10 +128,11 @@ def course1():
 
 @server.route("/course_get_members", methods=["POST"])
 def course2():
+    print(request.headers)
     return jsonify(
         {
             "members": system.school_time_table_system.getAllMembers(
-                request.headers["member_id"]
+                request.headers["Member-Id"]
             )
         }
     )
@@ -131,10 +140,11 @@ def course2():
 
 @server.route("/item_list_add_item", methods=["POST"])
 def item1():
+    print(request.headers)
     return jsonify(
         {
             "list": system.item_list_system.addItem(
-                request.headers["member_id"], request.values["information"]
+                request.headers["Member-Id"], request.values["information"]
             )
         }
     )
@@ -142,10 +152,11 @@ def item1():
 
 @server.route("/item_list_delete_item", methods=["POST"])
 def item2():
+    print(request.headers)
     return jsonify(
         {
             "list": system.item_list_system.deleteItem(
-                request.headers["member_id"], request.values["id"]
+                request.headers["Member-Id"], request.values["id"]
             )
         }
     )
@@ -153,17 +164,19 @@ def item2():
 
 @server.route("/item_list_get_list", methods=["POST"])
 def item3():
+    print(request.headers)
     return jsonify(
-        {"list": system.item_list_system.getItemList(request.headers["member_id"])}
+        {"list": system.item_list_system.getItemList(request.headers["Member-Id"])}
     )
 
 
 @server.route("/item_list_get_item", methods=["POST"])
 def item4():
+    print(request.headers)
     return jsonify(
         {
             "info": system.item_list_system.getItemById(
-                request.headers["member_id"], request.values["id"]
+                request.headers["Member-Id"], request.values["id"]
             )
         }
     )
