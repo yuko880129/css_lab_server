@@ -1,3 +1,4 @@
+from bulletin_board_system import BullentinBoardSyetem
 from cleaning_time_table_system import CleaningTimeTableSystem
 from item_list_system import ItemListSyetem
 from meeting_time_table_system import MeetingTimeTableSystem
@@ -12,6 +13,7 @@ import atexit
 
 class MainSystem:
     def __init__(self):
+        self.bulletin_board_system = BullentinBoardSyetem()
         self.cleaning_time_table_system = CleaningTimeTableSystem()
         self.item_list_system = ItemListSyetem()
         self.meeting_time_table_system = MeetingTimeTableSystem()
@@ -26,7 +28,7 @@ server = Flask(__name__)
 
 # Write back item list while shutting down server
 def exit_handler():
-    system.item_list_system.item_list.to_csv("./item_list.csv", index=False)
+    system.item_list_system.item_list.to_csv("./db/item_list.csv", index=False)
     print("\nWrite back item list succeccfully.")
 
 
