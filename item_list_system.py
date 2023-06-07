@@ -4,7 +4,7 @@ import pandas as pd
 # 需要增加判斷 token 是否合法的 flow cotrol
 class ItemListSyetem:
     def __init__(self):
-        self.item_list = pd.read_csv("./item_list.csv")
+        self.item_list = pd.read_csv("./db/item_list.csv")
         self.newest_id = self.item_list.iloc[-1]["id"] + 1
 
     def addItem(self, token: str, information: str):
