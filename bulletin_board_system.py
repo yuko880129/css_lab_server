@@ -29,7 +29,7 @@ class BullentinBoardSyetem:
                             0,
                         ]
                     ],
-                    columns=["name", "time", "content", "id", "is_pinned"],
+                    columns=["name", "time", "content", "id", "pinned"],
                 ),
             ),
             ignore_index=True,
@@ -40,6 +40,8 @@ class BullentinBoardSyetem:
 
     def deleteItem(self, token: str, id: str):
         index = self.getItemIndex(int(id))
+        if self.announcement_list.at[index, "pinned"] == 1:
+            self.pinned_id = -1
         self.announcement_list = self.announcement_list.drop(index, axis=0)
         print(self.announcement_list)
         return self.getItemList("1111")
