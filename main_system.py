@@ -29,7 +29,10 @@ server = Flask(__name__)
 # Write back item list while shutting down server
 def exit_handler():
     system.item_list_system.item_list.to_csv("./db/item_list.csv", index=False)
-    print("\nWrite back item list succeccfully.")
+    system.bulletin_board_system.announcement_list.to_csv(
+        "./db/announcement_list.csv", index=False
+    )
+    print("\nWrite back list succeccfully.")
 
 
 atexit.register(exit_handler)
@@ -42,7 +45,6 @@ def root():
 
 @server.route("/add_restraunt", methods=["POST"])
 def roulette1():
-    print(request.headers)
     system.roulette_system.addToMemberRestaurantList(
         request.headers["Member-Id"], request.values["name"]
     )
@@ -51,14 +53,12 @@ def roulette1():
 
 @server.route("/clear_restraunt", methods=["POST"])
 def roulette2():
-    print(request.headers)
     system.roulette_system.clearMemberRestaurantList(request.headers["Member-Id"])
     return "success"
 
 
 @server.route("/get_restraunt_list", methods=["POST"])
 def roulette3():
-    print(request.headers)
     return jsonify(
         {
             "list": system.roulette_system.getMemberRestaurantList(
@@ -70,7 +70,6 @@ def roulette3():
 
 @server.route("/cleaning_get_members", methods=["POST"])
 def cleaning1():
-    print(request.headers)
     return jsonify(
         {
             "list": system.cleaning_time_table_system.getHatarakuMembers(
@@ -82,7 +81,6 @@ def cleaning1():
 
 @server.route("/cleaning_get_startD", methods=["POST"])
 def cleaning2():
-    print(request.headers)
     return jsonify(
         {
             "startD": system.cleaning_time_table_system.getSemesterStartD(
@@ -94,7 +92,6 @@ def cleaning2():
 
 @server.route("/cleaning_get_endD", methods=["POST"])
 def cleaning3():
-    print(request.headers)
     return jsonify(
         {
             "endD": system.cleaning_time_table_system.getSemesterEndD(
@@ -106,7 +103,6 @@ def cleaning3():
 
 @server.route("/meeting_get_time", methods=["POST"])
 def meeting1():
-    print(request.headers)
     return jsonify(
         {
             "time": system.meeting_time_table_system.getmeeting_time(
@@ -118,7 +114,6 @@ def meeting1():
 
 @server.route("/course_get_time", methods=["POST"])
 def course1():
-    print(request.headers)
     return jsonify(
         {
             "time": system.school_time_table_system.getMemberClassTimeSchedual(
@@ -130,7 +125,6 @@ def course1():
 
 @server.route("/course_get_members", methods=["POST"])
 def course2():
-    print(request.headers)
     return jsonify(
         {
             "members": system.school_time_table_system.getAllMembers(
@@ -142,7 +136,6 @@ def course2():
 
 @server.route("/item_list_add_item", methods=["POST"])
 def item1():
-    print(request.headers)
     return jsonify(
         {
             "list": system.item_list_system.addItem(
@@ -154,7 +147,6 @@ def item1():
 
 @server.route("/item_list_delete_item", methods=["POST"])
 def item2():
-    print(request.headers)
     return jsonify(
         {
             "list": system.item_list_system.deleteItem(
@@ -166,7 +158,6 @@ def item2():
 
 @server.route("/item_list_get_list", methods=["POST"])
 def item3():
-    print(request.headers)
     return jsonify(
         {"list": system.item_list_system.getItemList(request.headers["Member-Id"])}
     )
@@ -174,7 +165,6 @@ def item3():
 
 @server.route("/item_list_get_item", methods=["POST"])
 def item4():
-    print(request.headers)
     return jsonify(
         {
             "info": system.item_list_system.getItemById(
@@ -182,6 +172,61 @@ def item4():
             )
         }
     )
+
+
+@server.route("/bb_list_add_announcement", methods=["POST"])
+def bb1():
+    return jsonify(
+        {
+            "list": system.bulletin_board_system.addItem(
+                request.headers["Member-Id"], request.values["information"]
+            )
+        }
+    )
+
+
+@server.route("/bb_list_delete_announcement", methods=["POST"])
+def bb2():
+    return jsonify(
+        {
+            "list": system.bulletin_board_system.deleteItem(
+                request.headers["Member-Id"], request.values["id"]
+            )
+        }
+    )
+
+
+@server.route("/bb_list_get_list", methods=["POST"])
+def bb3():
+    return jsonify(
+        {"list": system.bulletin_board_system.getItemList(request.headers["Member-Id"])}
+    )
+
+
+@server.route("/bb_list_get_announcement", methods=["POST"])
+def bb4():
+    return jsonify(
+        {
+            "info": system.bulletin_board_system.getItemById(
+                request.headers["Member-Id"], request.values["id"]
+            )
+        }
+    )
+
+
+@server.route("/bb_list_get_pinned_id", methods=["POST"])
+def bb5():
+    return jsonify(
+        {"id": system.bulletin_board_system.getPinnedId(request.headers["Member-Id"])}
+    )
+
+
+@server.route("/bb_list_pin_announcement", methods=["POST"])
+def bb6():
+    system.bulletin_board_system.setPinnedAnnouncement(
+        request.headers["Member-Id"], request.values["id"]
+    )
+    return "success"
 
 
 if __name__ == "__main__":
